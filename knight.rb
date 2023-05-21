@@ -1,5 +1,7 @@
 class Node
 
+    attr_reader :coordinates
+
     def initialize(x = nil, y = nil)
         @coordinates = [x, y]
     end
@@ -22,6 +24,28 @@ class Chess
 
 end
 
-chess = Chess.new
+class Knight
+    
+    attr_reader :start, :destination
 
-p chess.board_array
+    VALID_MOVES = [
+        [1, 2],
+        [1, -2],
+        [-1, 2],
+        [-1, -2],
+        [2, 1],
+        [2, -1],
+        [-2, 1],
+        [-2, -1]
+    ]
+
+    def initialize(start, destination)
+        @start = start
+        @destination = destination
+    end
+
+    def is_legal?()
+
+end
+
+
