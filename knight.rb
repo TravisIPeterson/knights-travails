@@ -9,6 +9,18 @@ class Node
 end
 
 class ChessBoard
+    attr_reader :board_array
+
+    def initialize
+        @board_array = []
+        spaces = *(1..8)
+        spaces.each do |x|
+            spaces.each do |y|
+                @board_array.push(Node.new(x, y))
+            end
+        end
+    end
+
     def display_board
         puts "    1   2   3   4   5   6   7   8  "
         puts "  #{row_separator}"
@@ -60,13 +72,6 @@ class KnightMoves
     def initialize(start, destination)
         @start = start
         @destination = destination
-        @board_array = []
-        spaces = *(1..8)
-        spaces.each do |x|
-            spaces.each do |y|
-                @board_array.push(Node.new(x, y))
-            end
-        end
     end
 
     def space_to_index(x, y)
@@ -81,7 +86,29 @@ class KnightMoves
 
 end
 
+def array_fixer(array)
+    array[0] = array[0].ord - 96
+    array[1] = array[1].to_i
+end
+
 board = ChessBoard.new
 board.display_board
 
-puts "Hello! Let's get to cheating at chess. Please type your starting coordinates, as well as the space you'd like to get to."
+puts "Hello! Let's get to cheating at chess. Please type your starting space (i.e. H5)"
+start = gets.chomp.downcase.split('')
+array_fixer(start)
+until board.board_array.any? { |space| space.coordinates == start }
+    puts "Nice try. Try entering some real coordinates."
+    start = gets.chomp.downcase.split('')
+    array_fixer(start)
+end
+puts "Great! Now which space would you like to get to?"
+destination = gets.chomp.downcase.split('')
+array_fixer(destination)
+until board.board_array.any? { |space| space.coordinates == destination }
+    puts "Nice try. Try entering some real coordinates."
+    destination = gets.chomp.downcase.split('')
+    array_fixer(destination)
+end
+p start
+p destination
