@@ -102,19 +102,13 @@ class KnightMoves
 
         x, y = coordinates
         VALID_MOVES.map { |dx, dy| [x + dx, y + dy] }
-                   .select { |move| valid_coordinates?(move) && is_legal?(coordinates, move) }
+                   .select { |move| valid_coordinates?(move) }
     end
 
     def valid_coordinates?(coordinates)
         x, y = coordinates
         x.between?(1,8) && y.between?(1,8)
     end
-
-    def is_legal?(current, target)
-        x_diff = (current[0] - target[0]).abs
-        y_diff = (current[1] - target[1]).abs
-        return (x_diff == 1 && y_diff == 2) || (x_diff == 2 && y_diff == 1)
-    end      
 
 end
 
